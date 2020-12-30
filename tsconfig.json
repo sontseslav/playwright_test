@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ES6",
+        "strict": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "types": [
+            "@types/jest",
+            "jest-playwright-preset",
+            "expect-playwright",
+        ]
+    },
+}

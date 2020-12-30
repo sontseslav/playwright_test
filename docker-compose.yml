@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web:
+    container_name: web
+    restart: always
+    image: klamping/realworld-web
+    environment:
+      - APIURL=local
+    ports:
+      - "8080:8080"
+    links:
+      - api
+  api:
+    container_name: api
+    restart: always
+    image: klamping/realworld-api
+    environment:
+      - NODE_ENV=production
+      - SECRET=hunter2
+      - MONGODB_URI=mongodb://mongo:27017/conduit
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
