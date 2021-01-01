@@ -12,7 +12,7 @@ let context: ChromiumBrowserContext;
 let page: Page;
 let disclaimerPage: Disclaimer;
 
-describe('Disclaimer modal window checks:', () => {
+xdescribe('Disclaimer modal window checks:', () => {
     beforeAll(async () => {
         browser = await chromium.launch({ headless: false });
         context = await browser.newContext();
