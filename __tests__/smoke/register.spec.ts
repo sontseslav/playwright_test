@@ -31,7 +31,7 @@ describe('Register user:', () => {
         await pageHelper.openNewDefaultPage();
     });
     afterEach(async () => {
-        DbHelper.dropDb('conduit');
+        await DbHelper.deleteUser('conduit', pageHelper.user);
         await (new Screenshot(page)).currentTestScreenshot();
         await page.close();
     });
