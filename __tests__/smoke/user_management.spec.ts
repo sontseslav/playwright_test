@@ -5,7 +5,6 @@ import {
 import Screenshot from '../../utils/screenshot';
 import PageHelper from '../../utils/pageHelper';
 import DbHelper from '../../utils/dbHelper';
-import Api from '../../utils/api';
 
 import Main from '../../pages/main';
 import SignUp from '../../pages/signup';
@@ -41,6 +40,7 @@ describe('Register user:', () => {
         // page.on('request', async (request) => {
         //     if (request.method() === 'OPTIONS') {
         //         console.log(
+        // eslint-disable-next-line max-len
         //             `>>REQUEST ${request.url()} \nKEYS:${Object.keys(request.headers())} \nVALUES:${Object.values(request.headers())}\n ${await request.response()}`,
         //         );
         //     }
@@ -48,6 +48,7 @@ describe('Register user:', () => {
         // page.on('response', async (response) => {
         //     if (response.request().method() !== 'GET') {
         //         console.log(
+        // eslint-disable-next-line max-len
         //             `RESPONSE>> ${response.request().method()} ${await response.body()} \nKEYS:${Object.keys(response.headers())} \nVALUES:${Object.values(response.headers())}\n ${response.status()} ${response.url()}`,
         //         );
         //     }
@@ -82,6 +83,16 @@ describe('User login:', () => {
     afterEach(async () => {
         await (new Screenshot(page)).currentTestScreenshot();
         await page.close();
+    });
+
+    it('should login default user', async () => {
+        const mainPage = new Main(page);
+        await (await mainPage.loginLink())?.click();
+        const loginPage = new LogIn(page);
+        await loginPage.signInWithCreds(
+            PageHelper.defaultUserEmail, PageHelper.defaultUserPassword,
+        );
+        expect(await mainPage.loginedUser(PageHelper.defaultUser)).toBeTruthy();
     });
 
     it('should not login user with incorrect credentials', async () => {
