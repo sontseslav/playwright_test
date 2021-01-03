@@ -1,5 +1,6 @@
-import { ClientRequest } from 'http';
-import http from 'http';
+/* eslint-disable no-console */
+/* eslint-disable max-len */
+import http, { ClientRequest } from 'http';
 
 export default class Api {
     private static apiRegisterData = JSON.stringify(
