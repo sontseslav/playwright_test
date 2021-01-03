@@ -84,7 +84,7 @@ describe('User login:', () => {
         await page.close();
     });
 
-    fit('should not login user with incorrect credentials', async () => {
+    it('should not login user with incorrect credentials', async () => {
         await (await (new Main(page)).loginLink())?.click();
         const loginPage = new LogIn(page);
         await loginPage.signInWithCreds(
