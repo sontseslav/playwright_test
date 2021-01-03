@@ -7,6 +7,10 @@ export default class Login {
         this.page = page;
     }
 
+    public async errorMessage(message: string): Promise<ElementHandle | null> {
+        return this.page.waitForSelector(`//li[text()="${message}"]`);
+    }
+
     public async emailField(): Promise<ElementHandle | null> {
         return this.page.$('xpath=//input[@type="email"]');
     }
@@ -22,6 +26,6 @@ export default class Login {
     public async signInWithCreds(email:string, password: string): Promise<void> {
         await (await this.emailField())?.fill(email);
         await (await this.passwordField())?.fill(password);
-        await (await this.loginBtn())?.click({ button: 'middle' });
+        await (await this.loginBtn())?.click();
     }
 }

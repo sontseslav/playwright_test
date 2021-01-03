@@ -7,6 +7,16 @@ export default class PageHelper {
 
     public email = 'jdoe@email.com';
 
+    public incorrectEmail = 'fake@email.com';
+
+    public incorrectPassword = 'incorrect_pass';
+
+    public static defaultUser = 'defaultuser';
+
+    public static defaultUserEmail = 'default@mail.com';
+
+    public static defaultUserPassword = 'password';
+
     private page: Page;
 
     constructor(page: Page) {

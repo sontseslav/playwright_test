@@ -16,6 +16,6 @@ export default class Main {
     }
 
     public async loginedUser(user: string) {
-        return this.page.$(`xpath=//a[@href="/@${user}/"]`);
+        return this.page.waitForSelector(`xpath=//a[@href="/@${user}/"]`);
     }
 }

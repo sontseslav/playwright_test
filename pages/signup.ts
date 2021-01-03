@@ -32,6 +32,5 @@ export default class SignUp {
         await (await this.emailField())?.fill(email);
         await (await this.passwordField())?.fill(password);
         await (await this.loginBtn())?.click();
-        await this.page.waitForTimeout(5000);
     }
 }
