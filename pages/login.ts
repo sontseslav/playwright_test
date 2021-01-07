@@ -12,11 +12,11 @@ export default class Login {
     }
 
     public async emailField(): Promise<ElementHandle | null> {
-        return this.page.$('xpath=//input[@type="email"]');
+        return this.page.waitForSelector('xpath=//input[@type="email"]');
     }
 
     public async passwordField(): Promise<ElementHandle | null> {
-        return this.page.$('xpath=//input[@type="password"]');
+        return this.page.waitForSelector('xpath=//input[@type="password"]');
     }
 
     public async loginBtn(): Promise<ElementHandle | null> {
@@ -24,7 +24,9 @@ export default class Login {
     }
 
     public async signInWithCreds(email:string, password: string): Promise<void> {
+        await (await this.emailField())?.click();
         await (await this.emailField())?.fill(email);
+        await (await this.passwordField())?.click();
         await (await this.passwordField())?.fill(password);
         await (await this.loginBtn())?.click();
     }

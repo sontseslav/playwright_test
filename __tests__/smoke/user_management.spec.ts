@@ -65,12 +65,10 @@ describe('Register user:', () => {
 
 describe('User login:', () => {
     beforeAll(async () => {
-        await DbHelper.addDefaultUser('conduit');
         browser = await chromium.launch({ headless: false });
         context = await browser.newContext();
     });
     afterAll(async () => {
-        await DbHelper.deleteUser('conduit', 'defaultuser');
         if (browser) {
             await browser.close();
         }
@@ -85,6 +83,37 @@ describe('User login:', () => {
         await page.close();
     });
 
+    it('should not login user with incorrect credentials', async () => {
+        await (await (new Main(page)).loginLink())?.click();
+        const loginPage = new LogIn(page);
+        await loginPage.signInWithCreds(
+            pageHelper.incorrectEmail, pageHelper.incorrectPassword,
+        );
+        expect(await loginPage.errorMessage('email or password is invalid')).toBeTruthy();
+    });
+});
+
+describe('Login default user:', () => {
+    beforeAll(async () => {
+        browser = await chromium.launch({ headless: false });
+        context = await browser.newContext();
+    });
+    afterAll(async () => {
+        if (browser) {
+            await browser.close();
+        }
+    });
+    beforeEach(async () => {
+        await DbHelper.addDefaultUser('conduit');
+        page = await context.newPage();
+        pageHelper = new PageHelper(page);
+        await pageHelper.openNewDefaultPage();
+    });
+    afterEach(async () => {
+        await DbHelper.deleteUser('conduit', 'defaultuser');
+        await (new Screenshot(page)).currentTestScreenshot();
+        await page.close();
+    });
     it('should login default user', async () => {
         const mainPage = new Main(page);
         await (await mainPage.loginLink())?.click();
@@ -93,14 +122,5 @@ describe('User login:', () => {
             PageHelper.defaultUserEmail, PageHelper.defaultUserPassword,
         );
         expect(await mainPage.loginedUser(PageHelper.defaultUser)).toBeTruthy();
-    });
-
-    it('should not login user with incorrect credentials', async () => {
-        await (await (new Main(page)).loginLink())?.click();
-        const loginPage = new LogIn(page);
-        await loginPage.signInWithCreds(
-            pageHelper.incorrectEmail, pageHelper.incorrectPassword,
-        );
-        expect(await loginPage.errorMessage('email or password is invalid')).toBeTruthy();
     });
 });
